@@ -57,4 +57,25 @@ class JavaScriptChannel {
       platformThreadHandler.post(postMessageRunnable);
     }
   }
+
+  // Suppressing unused warning as this is invoked from JavaScript.
+  @SuppressWarnings("unused")
+  @JavascriptInterface
+  public void invoke(final String message) {
+    Runnable postMessageRunnable =
+            new Runnable() {
+              @Override
+              public void run() {
+                HashMap<String, String> arguments = new HashMap<>();
+                arguments.put("channel", javaScriptChannelName);
+                arguments.put("message", message);
+                methodChannel.invokeMethod("javascriptChannelMessage", arguments);
+              }
+            };
+    if (platformThreadHandler.getLooper() == Looper.myLooper()) {
+      postMessageRunnable.run();
+    } else {
+      platformThreadHandler.post(postMessageRunnable);
+    }
+  }
 }
