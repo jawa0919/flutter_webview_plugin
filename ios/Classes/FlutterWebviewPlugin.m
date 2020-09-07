@@ -121,7 +121,8 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
         [self cleanCookies:result];
 
     }
-
+    
+    // TODO userAgent 改为添加模式
     if (userAgent != (id)[NSNull null]) {
         [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent": userAgent}];
     }
