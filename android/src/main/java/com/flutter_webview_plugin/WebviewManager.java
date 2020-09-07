@@ -136,9 +136,9 @@ class WebviewManager {
         webViewClient = new BrowserClient() {
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                if (ignoreSSLErrors){
+                if (ignoreSSLErrors) {
                     handler.proceed();
-                }else {
+                } else {
                     super.onReceivedSslError(view, handler, error);
                 }
             }
@@ -433,7 +433,8 @@ class WebviewManager {
         }
 
         if (userAgent != null) {
-            webView.getSettings().setUserAgentString(userAgent);
+            String oldUA = webView.getSettings().getUserAgentString();
+            webView.getSettings().setUserAgentString(oldUA + ";" + userAgent);
         }
 
         if (!scrollBar) {
@@ -533,7 +534,7 @@ class WebviewManager {
     /**
      * Clears cache
      */
-    void cleanCache(){
+    void cleanCache() {
         webView.clearCache(true);
     }
 
